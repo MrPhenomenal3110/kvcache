@@ -43,7 +43,7 @@ Key-value cache implemented using Golang
 
 ### Prerequisites
 
-Ensure you have Go 1.23 or later installed on your system.
+Ensure you have Go 1.21 or later installed on your system.
 
 ### Building from Source
 
