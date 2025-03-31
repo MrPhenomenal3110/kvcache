@@ -2,8 +2,6 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
 	"net/http"
 
 	"kvcache/internal/cache"
@@ -12,7 +10,6 @@ import (
 // HandlePut handles PUT operations for the cache
 func HandlePut(cache *cache.Cache) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Received POST request") // Debugging log
 		var req PutRequest
 		decoder := json.NewDecoder(r.Body)
 		if err := decoder.Decode(&req); err != nil {
@@ -23,9 +20,6 @@ func HandlePut(cache *cache.Cache) http.HandlerFunc {
 			})
 			return
 		}
-		
-		fmt.Println("request body: ")
-		fmt.Println(req)
 		
 		cache.Put(req.Key, req.Value)
 		
@@ -40,8 +34,6 @@ func HandlePut(cache *cache.Cache) http.HandlerFunc {
 // HandleGet handles GET operations for the cache
 func HandleGet(kvCache *cache.Cache) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        log.Println("Received GET request") // Debugging log
-
         // Read query parameter
         key := r.URL.Query().Get("key")
         if key == "" {
@@ -53,12 +45,16 @@ func HandleGet(kvCache *cache.Cache) http.HandlerFunc {
         value, found := kvCache.Get(key)
 
         if !found {
-            log.Printf("Key not found: %s", key)
             http.Error(w, "Key not found", http.StatusNotFound)
             return
         }
 
-        fmt.Fprintln(w, value) // Send value to client
+        w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(Response{
+			Status:  "OK",
+			Key: key,
+			Value: value,
+		})
     }
 }
 
