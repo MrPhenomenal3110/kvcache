@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"kvcache/internal/cache"
+	"github.com/MrPhenomenal3110/kvcache/internal/cache"
 )
 
 // HandlePut handles PUT operations for the cache

@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"kvcache/internal/api"
-	"kvcache/internal/cache"
+	"github.com/MrPhenomenal3110/kvcache/internal/api"
+	"github.com/MrPhenomenal3110/kvcache/internal/cache"
 )
 
 func main() {
