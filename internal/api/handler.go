@@ -37,7 +37,11 @@ func HandleGet(kvCache *cache.Cache) http.HandlerFunc {
         // Read query parameter
         key := r.URL.Query().Get("key")
         if key == "" {
-            http.Error(w, "Missing key parameter", http.StatusBadRequest)
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(Response{
+				Status:  "ERROR",
+				Message: "Missing key parameter",
+			})
             return
         }
 
@@ -45,7 +49,11 @@ func HandleGet(kvCache *cache.Cache) http.HandlerFunc {
         value, found := kvCache.Get(key)
 
         if !found {
-            http.Error(w, "Key not found", http.StatusNotFound)
+            w.WriteHeader(http.StatusNotFound)
+			json.NewEncoder(w).Encode(Response{
+				Status:  "ERROR",
+				Message: "Key not found",
+			})
             return
         }
 
