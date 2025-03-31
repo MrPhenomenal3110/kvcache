@@ -55,7 +55,7 @@ git clone https://github.com/MrPhenomenal3110/kvcache.git
 cd kvcache
 
 # Build the project
-go build -o kvcache
+go build -o kvcache ./cmd/kvcache
 
 # Launch the server
 ./kvcache
